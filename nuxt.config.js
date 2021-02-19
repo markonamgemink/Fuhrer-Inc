@@ -1,7 +1,10 @@
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
-
+  server: {
+    port: 3000, // default: 3000
+    host: '0.0.0.0', // default: localhost
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'fuhrer-inc',
@@ -17,10 +20,10 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['~/assets/css/global.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/vue-awesome.js'],
+  plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -33,7 +36,16 @@ export default {
     '@nuxtjs/tailwindcss',
     '@nuxtjs/stylelint-module',
     '@nuxtjs/svg',
+    '@nuxtjs/fontawesome',
   ],
+
+  fontawesome: {
+    component: 'Icon',
+    icons: {
+      solid: ['faBars'],
+      brands: ['faYoutube', 'faFacebook', 'faWhatsapp', 'faInstagram'],
+    },
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -46,6 +58,6 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: ['vue-awesome'],
+    // transpile: [/^vue-awesome/],
   },
 }

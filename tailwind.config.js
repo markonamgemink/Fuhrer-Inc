@@ -12,6 +12,8 @@ module.exports = {
       colors: {
         primary: '#F08619',
       },
+      zIndex: { '-1': '-1' },
+      transformOrigin: { 0: '0%' },
     },
   },
   variants: {

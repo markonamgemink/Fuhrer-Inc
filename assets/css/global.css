@@ -1,0 +1,20 @@
+.text-field {
+  @apply relative border-b-2 border-gray-500 focus-within:border-primary transition-colors ease-in duration-200;
+}
+
+.text-field-input {
+  @apply block w-full appearance-none focus:outline-none bg-transparent;
+}
+
+.text-field-label {
+  @apply absolute text-gray-500 top-0 transition-all duration-300 origin-0;
+}
+
+.text-field-input:focus-within ~ .text-field-label,
+.text-field-input:not(:placeholder-shown) ~ .text-field-label {
+  @apply transform scale-75 -translate-y-6 text-primary;
+}
+
+.btn {
+  @apply text-white font-semibold bg-primary rounded py-2 px-4 hover:shadow-lg transition-shadow duration-300;
+}

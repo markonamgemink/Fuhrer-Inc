@@ -8,31 +8,40 @@
       </span>
     </div>
     <div>
-      <ul class="flex items-center space-x-4">
+      <ul class="flex items-center space-x-8">
         <li>
           <span
-            ><Icon name="brands/facebook" scale="1.2" class="foot-link"></Icon
+            ><Icon
+              :icon="['fab', 'whatsapp']"
+              class="foot-link foot-icon"
+            ></Icon
           ></span>
         </li>
         <li>
           <span
-            ><Icon name="brands/instagram" scale="1.2" class="foot-link"></Icon
+            ><Icon
+              :icon="['fab', 'facebook']"
+              class="foot-link foot-icon"
+            ></Icon
           ></span>
         </li>
         <li>
           <span
-            ><Icon name="brands/tiktok" scale="1.2" class="foot-link"></Icon
+            ><Icon
+              :icon="['fab', 'instagram']"
+              class="foot-link foot-icon"
+            ></Icon
           ></span>
         </li>
         <li>
           <span
-            ><Icon name="brands/youtube" scale="1.2" class="foot-link"></Icon
+            ><Icon :icon="['fab', 'youtube']" class="foot-link foot-icon"></Icon
           ></span>
         </li>
       </ul>
     </div>
     <div>
-      <ul class="flex items-center space-x-8">
+      <ul class="flex items-center space-x-4 md:space-x-8">
         <li><span class="foot-link text-white text-lg">Contact Us!</span></li>
         <li><span class="foot-link text-white text-lg">About Us!</span></li>
         <li><span class="foot-link text-white text-lg">Gallery!</span></li>
@@ -48,5 +57,9 @@ export default {}
 <style scoped>
 .foot-link {
   @apply text-base text-white hover:text-primary ease-in transition-colors duration-200;
+}
+
+.foot-icon {
+  @apply text-xl;
 }
 </style>
