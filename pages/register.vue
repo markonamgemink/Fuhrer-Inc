@@ -51,7 +51,7 @@
             </div>
           </div>
           <div class="w-full mt-8">
-            <button class="w-full btn">DAFTAR</button>
+            <button class="w-full btn btn-primary">DAFTAR</button>
           </div>
         </form>
         <div class="mt-8">

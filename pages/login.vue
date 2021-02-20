@@ -32,7 +32,7 @@
               <nuxt-link to="/" class="text-primary">Lupa Password?</nuxt-link>
             </div>
             <div class="w-full mt-4">
-              <button class="w-full btn">MASUK</button>
+              <button class="w-full btn btn-primary">MASUK</button>
             </div>
           </div>
         </form>
