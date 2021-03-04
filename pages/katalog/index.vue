@@ -22,33 +22,55 @@
     </section>
     <section>
       <div class="container px-8 py-16 mx-auto">
-        <ul class="flex items-center space-x-4">
-          <li>
-            <span
-              ><nuxt-link to="/" class="text-gray-900 font-semibold text-xl"
-                >All</nuxt-link
-              ></span
+        <div class="flex justify-between">
+          <ul class="flex items-center space-x-4">
+            <li>
+              <span
+                ><nuxt-link
+                  to="/katalog"
+                  exact
+                  class="text-gray-900 font-semibold text-xl"
+                  >All</nuxt-link
+                ></span
+              >
+            </li>
+            <li>
+              <span
+                ><nuxt-link to="/" class="text-gray-500 font-semibold text-xl"
+                  >T-Shirt</nuxt-link
+                ></span
+              >
+            </li>
+            <li>
+              <span
+                ><nuxt-link to="/" class="text-gray-500 font-semibold text-xl"
+                  >Hoodie</nuxt-link
+                ></span
+              >
+            </li>
+          </ul>
+          <div class="flex items-center">
+            <p class="text-gray-900 pr-2 text-base font-medium">
+              Urut Berdasarkan
+            </p>
+            <select
+              id="orders"
+              name="order"
+              class="rounded-full bg-white border border-gray-900 p-2 focus:outline-none"
             >
-          </li>
-          <li>
-            <span
-              ><nuxt-link to="/" class="text-gray-500 font-semibold text-xl"
-                >T-Shirt</nuxt-link
-              ></span
-            >
-          </li>
-          <li>
-            <span
-              ><nuxt-link to="/" class="text-gray-500 font-semibold text-xl"
-                >Hoodie</nuxt-link
-              ></span
-            >
-          </li>
-        </ul>
+              <option value="newest">Terbaru</option>
+              <option value="newest">Terlama</option>
+              <option value="populer">Terpopuler</option>
+              <option value="expensive">Harga Termurah</option>
+              <option value="cheapest">Harga Termahal</option>
+            </select>
+          </div>
+        </div>
         <div class="mt-4 grid grid-cols-4 gap-8">
           <ProductCard
             v-for="index in 16"
             :key="index"
+            :product-id="index"
             title="Kaos Apik"
             description=" Lorem ipsum dolor sit
           amet consectetur, adipisicing elit. Error inventore a itaque non illo,

@@ -2,6 +2,14 @@
   @apply text-gray-900 hover:text-primary transition-colors duration-300;
 }
 
+.active-link {
+  @apply text-primary;
+}
+
+.exact-active-link {
+  @apply text-primary;
+}
+
 .text-field {
   @apply relative border-b-2 border-gray-500 focus-within:border-primary transition-colors ease-in duration-200;
 }

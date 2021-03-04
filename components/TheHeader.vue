@@ -7,7 +7,7 @@
   >
     <div>
       <span class="text-xl text-gray-900">
-        <nuxt-link to="/">Home</nuxt-link>
+        <nuxt-link to="/" exact>Home</nuxt-link>
       </span>
     </div>
     <div class="hidden md:flex">
@@ -18,13 +18,17 @@
           >
         </li>
         <li>
-          <span class="link"> <nuxt-link to="/">Kustom Kaos</nuxt-link></span>
+          <span class="link">
+            <nuxt-link to="/kustom-kaos">Kustom Kaos</nuxt-link></span
+          >
         </li>
         <li>
-          <span class="link"> <nuxt-link to="/">Gallery</nuxt-link></span>
+          <span class="link"> <nuxt-link to="/galeri">Gallery</nuxt-link></span>
         </li>
         <li>
-          <span class="link"> <nuxt-link to="/">About Us</nuxt-link></span>
+          <span class="link">
+            <nuxt-link to="/about-us">About Us</nuxt-link></span
+          >
         </li>
         <li>
           <span class="link">
@@ -55,11 +59,13 @@
       >
         <li @click="isShowDropdown = !isShowDropdown">
           <span class="link">
-            <nuxt-link to="/katalog">Katalog</nuxt-link></span
+            <nuxt-link to="/katalog" exact>Katalog</nuxt-link></span
           >
         </li>
         <li @click="isShowDropdown = !isShowDropdown">
-          <span class="link"> <nuxt-link to="/">Kustom Kaos</nuxt-link></span>
+          <span class="link">
+            <nuxt-link to="/" exact>Kustom Kaos</nuxt-link></span
+          >
         </li>
         <li @click="isShowDropdown = !isShowDropdown">
           <span class="link"> <nuxt-link to="/">Gallery</nuxt-link></span>
