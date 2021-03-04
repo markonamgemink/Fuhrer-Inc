@@ -13,7 +13,9 @@
     <div class="hidden md:flex">
       <ul class="flex items-center space-x-8">
         <li>
-          <span class="link"> <nuxt-link to="/">Katalog</nuxt-link></span>
+          <span class="link">
+            <nuxt-link to="/katalog">Katalog</nuxt-link></span
+          >
         </li>
         <li>
           <span class="link"> <nuxt-link to="/">Kustom Kaos</nuxt-link></span>
@@ -52,7 +54,9 @@
         class="flex flex-col space-y-2 origin-top absolute mt-56 py-2 px-8 w-full bg-white border-t-2 border-primary shadow-xl -mx-8"
       >
         <li @click="isShowDropdown = !isShowDropdown">
-          <span class="link"> <nuxt-link to="/">Katalog</nuxt-link></span>
+          <span class="link">
+            <nuxt-link to="/katalog">Katalog</nuxt-link></span
+          >
         </li>
         <li @click="isShowDropdown = !isShowDropdown">
           <span class="link"> <nuxt-link to="/">Kustom Kaos</nuxt-link></span>

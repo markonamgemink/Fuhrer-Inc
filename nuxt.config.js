@@ -42,7 +42,7 @@ export default {
   fontawesome: {
     component: 'Icon',
     icons: {
-      solid: ['faBars'],
+      solid: ['faBars', 'faSearch'],
       brands: ['faYoutube', 'faFacebook', 'faWhatsapp', 'faInstagram'],
     },
   },

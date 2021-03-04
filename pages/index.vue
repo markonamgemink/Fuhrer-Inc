@@ -10,7 +10,7 @@
             KONVEKSI KAOS
           </h2>
         </div>
-        <img src="~/static/images/hitler.png" alt="Hitler" />
+        <img src="~/static/images/Girl.png" alt="Girl" />
       </div>
       <div class="my-auto flex-1 text-center md:text-left">
         <div class="hidden md:flex flex-col">
