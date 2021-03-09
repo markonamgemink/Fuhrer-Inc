@@ -108,4 +108,12 @@ export default {
 .scrolled {
   @apply w-full bg-white shadow-lg z-40;
 }
+
+.active-link {
+  @apply text-primary;
+}
+
+.exact-active-link {
+  @apply text-primary;
+}
 </style>

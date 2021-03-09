@@ -6,36 +6,55 @@
     <div class="flex-1 md:border-l-8 border-primary">
       <div class="h-full bg-white shadow-xl mx-4 p-8 rounded-xl">
         <h2 class="text-3xl font-semibold text-gray-900 mb-12">Masuk</h2>
-        <form action="#" class="flex flex-col space-y-8">
-          <div class="flex flex-col space-y-12">
-            <div class="text-field">
-              <input
-                name="email"
-                type="text"
-                class="text-field-input"
-                placeholder=" "
-              />
-              <label for="email" class="text-field-label">Email</label>
+        <ValidationObserver v-slot="{ handleSubmit }">
+          <form
+            class="flex flex-col space-y-8"
+            @submit.prevent="handleSubmit(onSubmit)"
+          >
+            <div class="flex flex-col space-y-12">
+              <ValidationProvider v-slot="{ errors }" rules="required|min:8">
+                <div class="text-field">
+                  <input
+                    v-model="form.email"
+                    name="email"
+                    type="text"
+                    class="text-field-input"
+                    placeholder=" "
+                  />
+                  <label for="email" class="text-field-label">Email</label>
+                </div>
+                <span class="error-text">{{ errors[0] }}</span>
+              </ValidationProvider>
+              <ValidationProvider v-slot="{ errors }" rules="required|min:8">
+                <div class="text-field">
+                  <input
+                    v-model="form.password"
+                    name="password"
+                    type="password"
+                    class="text-field-input"
+                    placeholder=" "
+                  />
+                  <label for="password" class="text-field-label"
+                    >Password</label
+                  >
+                </div>
+                <span class="error-text">{{ errors[0] }}</span>
+              </ValidationProvider>
             </div>
-            <div class="text-field">
-              <input
-                name="password"
-                type="password"
-                class="text-field-input"
-                placeholder=" "
-              />
-              <label for="password" class="text-field-label">Password</label>
-            </div>
-          </div>
-          <div>
             <div>
-              <nuxt-link to="/" class="text-primary">Lupa Password?</nuxt-link>
+              <div>
+                <nuxt-link to="/" class="text-primary"
+                  >Lupa Password?</nuxt-link
+                >
+              </div>
+              <div class="w-full mt-4">
+                <button type="submit" class="w-full btn btn-primary">
+                  MASUK
+                </button>
+              </div>
             </div>
-            <div class="w-full mt-4">
-              <button class="w-full btn btn-primary">MASUK</button>
-            </div>
-          </div>
-        </form>
+          </form>
+        </ValidationObserver>
         <div class="mt-8">
           <p class="text-gray-900 text-center">
             Belum Punya Akun?
@@ -50,5 +69,49 @@
 </template>
 
 <script>
-export default {}
+import { mapGetters } from 'vuex'
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
+
+export default {
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
+  middleware: 'auth',
+  data() {
+    return {
+      form: {
+        email: '',
+        password: '',
+      },
+    }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'user/getUser',
+      token: 'user/getToken',
+    }),
+  },
+  methods: {
+    async onSubmit() {
+      const response = await this.$store.dispatch('user/login', this.form)
+      if (response.status === 400) {
+        this.$toast.show('Email dan Password salah!', {
+          position: 'top-center',
+          theme: 'bubble',
+          type: 'error',
+          duration: 3000,
+        })
+      } else {
+        this.$toast.show('Berhasil masuk!', {
+          position: 'top-center',
+          theme: 'bubble',
+          type: 'success',
+          duration: 3000,
+        })
+        this.$router.push({ path: '/' })
+      }
+    },
+  },
+}
 </script>

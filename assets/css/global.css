@@ -2,14 +2,6 @@
   @apply text-gray-900 hover:text-primary transition-colors duration-300;
 }
 
-.active-link {
-  @apply text-primary;
-}
-
-.exact-active-link {
-  @apply text-primary;
-}
-
 .text-field {
   @apply relative border-b-2 border-gray-500 focus-within:border-primary transition-colors ease-in duration-200;
 }
@@ -37,4 +29,8 @@
 
 .btn-secondary {
   @apply text-gray-900 rounded-full border-2 border-gray-900 hover:text-primary hover:border-primary transition-colors duration-300;
+}
+
+.error-text {
+  @apply text-sm text-red-500;
 }
