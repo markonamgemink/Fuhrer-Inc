@@ -1,19 +1,13 @@
 export const state = () => ({
   authenticated: false,
   token: null,
-  user: {},
+  user: null,
 })
 
 export const getters = {
-  getUser: (state) => {
-    return state.user
-  },
-  getToken: (state) => {
-    return state.token
-  },
-  getAuthenticated: (state) => {
-    return state.authenticated
-  },
+  getUser: (state) => state.user,
+  getToken: (state) => window.$nuxt.$cookies.get('token') || state.token,
+  getAuthenticated: (state) => state.authenticated,
 }
 
 export const mutations = {
@@ -43,7 +37,9 @@ export const actions = {
         commit('setAuthenticated', true)
         this.$axios.defaults.headers.common.Authorization = `Bearer ${data.meta.token}`
         localStorage.setItem('token', data.meta.token)
-        window.$nuxt.$cookies.set('token', data.meta.token)
+        window.$nuxt.$cookies.set('token', data.meta.token, {
+          maxAge: 60 * 60,
+        })
         return data
       })
       .catch((err) => ({
@@ -62,14 +58,31 @@ export const actions = {
         commit('setUser', data.data)
         commit('setAuthenticated', true)
         this.$axios.defaults.headers.common.Authorization = `Bearer ${data.meta.token}`
-        localStorage.setItem('token', data.meta.token)
+        window.$nuxt.$cookies.set('token', data.meta.token, {
+          maxAge: 60 * 60,
+        })
         return data
       })
       .catch((err) => err.message)
   },
+  async getUser({ commit }) {
+    this.$axios.defaults.headers.common.Authorization = `Bearer ${window.$nuxt.$cookies.get(
+      'token'
+    )}`
+    return await this.$axios
+      .get('user')
+      .then(({ data }) => {
+        commit('setUser', data.data)
+      })
+      .catch((err) => ({
+        status: err.response.status,
+        msg: err.response.data.error,
+      }))
+  },
   logout({ commit }) {
     commit('resetState')
     commit('setAuthenticated', false)
+    delete this.$axios.defaults.headers.common.Authorization
     window.$nuxt.$cookies.remove('token')
   },
 }

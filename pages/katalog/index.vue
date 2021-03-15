@@ -66,18 +66,16 @@
             </select>
           </div>
         </div>
-        <div class="mt-4 grid grid-cols-4 gap-8">
+        <Loading v-if="$fetchState.pending" />
+        <div else class="mt-4 grid grid-cols-4 gap-8">
           <ProductCard
-            v-for="index in 16"
-            :key="index"
-            :product-id="index"
-            title="Kaos Apik"
-            description=" Lorem ipsum dolor sit
-          amet consectetur, adipisicing elit. Error inventore a itaque non illo,
-          ullam atque recusandae dolores repudiandae nostrum id sint autem nam?
-          Ab quae hic iste autem quo?"
-            price="150.000"
-            :image="a"
+            v-for="product in products"
+            :key="product.id"
+            :product-id="product.id"
+            :title="product.name"
+            :description="product.desc"
+            :price="product.price"
+            :image="product.image"
           />
         </div>
       </div>
@@ -86,10 +84,21 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import ProductCard from '~/components/ProductCard.vue'
+import Loading from '~/components/Loading.vue'
 export default {
   components: {
     ProductCard,
+    Loading,
+  },
+  async fetch() {
+    await this.$store.dispatch('product/getAllProduct')
+  },
+  computed: {
+    ...mapGetters({
+      products: 'product/getProducts',
+    }),
   },
 }
 </script>

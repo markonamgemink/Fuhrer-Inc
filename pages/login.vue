@@ -77,7 +77,7 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
-  middleware: 'auth',
+  middleware: 'unauth',
   data() {
     return {
       form: {

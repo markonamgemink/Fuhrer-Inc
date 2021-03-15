@@ -46,7 +46,14 @@ export default {
   fontawesome: {
     component: 'Icon',
     icons: {
-      solid: ['faBars', 'faSearch', 'faPlus', 'faMinus'],
+      solid: [
+        'faBars',
+        'faSearch',
+        'faPlus',
+        'faMinus',
+        'faUserCircle',
+        'faCircleNotch',
+      ],
       brands: ['faYoutube', 'faFacebook', 'faWhatsapp', 'faInstagram'],
     },
   },

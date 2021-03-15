@@ -23,14 +23,14 @@
           >
         </li>
         <li>
-          <span class="link"> <nuxt-link to="/galeri">Gallery</nuxt-link></span>
-        </li>
-        <li>
           <span class="link">
-            <nuxt-link to="/about-us">About Us</nuxt-link></span
+            <nuxt-link to="/about-us">Tentang Kami</nuxt-link></span
           >
         </li>
-        <li>
+        <li v-if="$cookies.get('token')">
+          <span class="link"> <nuxt-link to="/profile">Profil</nuxt-link></span>
+        </li>
+        <li v-else>
           <span class="link">
             <nuxt-link to="/login">Masuk/Daftar</nuxt-link></span
           >
@@ -64,16 +64,21 @@
         </li>
         <li @click="isShowDropdown = !isShowDropdown">
           <span class="link">
-            <nuxt-link to="/" exact>Kustom Kaos</nuxt-link></span
+            <nuxt-link to="/kustom-kaos" exact>Kustom Kaos</nuxt-link></span
           >
         </li>
         <li @click="isShowDropdown = !isShowDropdown">
-          <span class="link"> <nuxt-link to="/">Gallery</nuxt-link></span>
+          <span class="link">
+            <nuxt-link to="/about-us">Tentang Kami</nuxt-link></span
+          >
         </li>
-        <li @click="isShowDropdown = !isShowDropdown">
-          <span class="link"> <nuxt-link to="/">About Us</nuxt-link></span>
+        <li
+          v-if="$cookies.get('token')"
+          @click="isShowDropdown = !isShowDropdown"
+        >
+          <span class="link"> <nuxt-link to="/profile">Profil</nuxt-link></span>
         </li>
-        <li @click="isShowDropdown = !isShowDropdown">
+        <li v-else @click="isShowDropdown = !isShowDropdown">
           <span class="link">
             <nuxt-link to="/login">Masuk/Daftar</nuxt-link></span
           >
