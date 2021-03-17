@@ -7,11 +7,11 @@
     <div v-else class="container mx-auto py-16 flex">
       <div class="flex-1"></div>
       <div class="flex-1 p-8 text-white bg-gray-900 rounded-xl shadow-xl">
-        <h3 class="text-3xl font-bold">{{ product.name }}</h3>
+        <h3 class="text-3xl font-bold">{{ product.data.name }}</h3>
         <p class="text-xl font-semibold my-2">
           Rp.
           {{
-            product.price
+            currentProduct.price
               .toFixed(2)
               .replace('.', ',')
               .toString()
@@ -19,33 +19,86 @@
           }}
         </p>
         <ul class="flex space-x-4 my-4">
-          <li>
-            <span class="font-semibold text-base size-btn">S</span>
+          <li v-for="stock in product.stock" :key="stock.id">
+            <span
+              :class="{
+                'active-size': currentProduct.size === `${stock.size}`,
+              }"
+              class="font-semibold text-base size-btn"
+              @click="changeProductStock(`${stock.size}`)"
+              >{{ stock.size }}</span
+            >
           </li>
-          <li><span class="font-semibold text-base size-btn">M</span></li>
-          <li>
-            <span class="font-semibold text-base size-btn active-size">L</span>
+          <!-- <li>
+            <span
+              :class="{'disabled-size': 'active-size': currentProduct.size === 'S' }"
+              class="font-semibold text-base size-btn"
+              @click="changeProductStock('S')"
+              >S</span
+            >
           </li>
-          <li><span class="font-semibold text-base size-btn">XL</span></li>
-          <li><span class="font-semibold text-base size-btn">XXL</span></li>
+          <li>
+            <span
+              :class="{ 'active-size': currentProduct.size === 'M' }"
+              class="font-semibold text-base size-btn"
+              @click="changeProductStock('M')"
+              >M</span
+            >
+          </li>
+          <li>
+            <span
+              :class="{ 'active-size': currentProduct.size === 'L' }"
+              class="font-semibold text-base size-btn"
+              @click="changeProductStock('L')"
+              >L</span
+            >
+          </li>
+          <li>
+            <span
+              :class="{ 'active-size': currentProduct.size === 'XL' }"
+              class="font-semibold text-base size-btn"
+              @click="changeProductStock('XL')"
+              >XL</span
+            >
+          </li>
+          <li>
+            <span
+              :class="{ 'active-size': currentProduct.size === 'XXL' }"
+              class="font-semibold text-base size-btn"
+              @click="changeProductStock('XXL')"
+              >XXL</span
+            >
+          </li> -->
         </ul>
         <div class="flex space-x-8 my-2">
-          <div class="flex items-center space-x-6">
-            <Icon
-              icon="minus"
-              class="box-content p-1 text-xl rounded-full cursor-pointer"
-              :class="[qty > 0 ? 'bg-primary' : 'bg-gray-500']"
-              @click="qty > 0 ? qty-- : null"
-            />
-            <p class="font-semibold xl">{{ qty }}</p>
+          <div
+            class="flex flex-col md:flex-row md:space-x-4 items-center justify-center"
+          >
+            <div class="flex items-center space-x-6">
+              <Icon
+                icon="minus"
+                class="box-content p-1 text-xl rounded-full cursor-pointer"
+                :class="[qty > 0 ? 'bg-primary' : 'bg-gray-500']"
+                @click="qty > 0 ? qty-- : null"
+              />
+              <p class="font-semibold xl">{{ qty }}</p>
 
-            <Icon
-              icon="plus"
-              class="box-content p-1 text-xl rounded-full cursor-pointer"
-              :class="[qty < product.stock ? 'bg-primary' : 'bg-gray-500']"
-              @click="qty < product.stock ? qty++ : null"
-            />
+              <Icon
+                icon="plus"
+                class="box-content p-1 text-xl rounded-full cursor-pointer"
+                :class="[
+                  qty < currentProduct.stock ? 'bg-primary' : 'bg-gray-500',
+                ]"
+                @click="qty < currentProduct.stock ? qty++ : null"
+              />
+            </div>
+            <div>
+              <p class="text-white font-semibold">
+                Stok : {{ currentProduct.stock }}
+              </p>
+            </div>
           </div>
+
           <button class="btn bg-white text-black rounded">+ Keranjang</button>
           <button class="btn bg-primary rounded">Beli Langsung</button>
         </div>
@@ -54,19 +107,19 @@
             <span class="detail-menu detail-menu-active">Detail</span>
             <span class="detail-menu">Ulasan</span>
           </div>
-          <p>{{ product.desc }}</p>
+          <p>{{ product.data.desc }}</p>
           <ul class="text-base font-semibold flex space-x-8">
             <div>
               <li>
                 <pre>Bahan    : Cotton</pre>
               </li>
               <li>
-                <pre>Kategori : {{ product.category }}</pre>
+                <pre>Kategori : {{ product.data.category }}</pre>
               </li>
             </div>
             <div>
               <li>
-                <pre>Berat    : 0.2 KG {{ product.id }}</pre>
+                <pre>Berat    : 0.2 KG</pre>
               </li>
             </div>
           </ul>
@@ -86,12 +139,13 @@ export default {
   data() {
     return {
       qty: 0,
+      currentProduct: null,
     }
   },
-
   async fetch() {
     if (this.product == null || this.product.id !== this.$route.params.id) {
       await this.$store.dispatch('product/getProduct', this.$route.params.id)
+      this.currentProduct = this.product.stock[0]
     }
   },
 
@@ -100,11 +154,22 @@ export default {
       product: 'product/getProduct',
     }),
   },
+  methods: {
+    changeProductStock(size) {
+      this.currentProduct = this.product.stock.find(
+        (stock) => stock.size === size
+      )
+    },
+  },
 }
 </script>
 <style scoped>
 .active-size {
   @apply bg-primary;
+}
+
+.disable-size {
+  @apply hover:bg-gray-500;
 }
 
 .size-btn {

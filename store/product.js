@@ -1,14 +1,5 @@
 export const state = () => ({
-  product: {
-    id: Number,
-    name: String,
-    desc: String,
-    price: Number,
-    stock: Number,
-    image: String,
-    size: String,
-    category: String,
-  },
+  product: null,
   products: [],
 })
 
@@ -33,7 +24,7 @@ export const mutations = {
 export const actions = {
   async getAllProduct({ commit }, params) {
     return await this.$axios
-      .get('products/distinct', params)
+      .get('products', params)
       .then(({ data }) => {
         commit('setProducts', data.data)
         return data
@@ -47,7 +38,7 @@ export const actions = {
     return await this.$axios
       .get(`products/${id}`)
       .then(({ data }) => {
-        commit('setProduct', data.data)
+        commit('setProduct', data)
         return data
       })
       .catch((err) => ({

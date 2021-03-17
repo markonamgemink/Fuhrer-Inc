@@ -13,7 +13,6 @@
         <p class="text-gray-500 line-clamp-3">
           {{ description }}
         </p>
-        <p class="text-gray-900 text-xl font-semibold">Rp. {{ price }}</p>
       </div>
     </div>
   </nuxt-link>
@@ -36,10 +35,6 @@ export default {
     },
     image: {
       type: String,
-      required: true,
-    },
-    price: {
-      type: Number,
       required: true,
     },
   },

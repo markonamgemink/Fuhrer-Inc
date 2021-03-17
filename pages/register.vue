@@ -20,10 +20,7 @@
               >{{ errors }}</span
             > -->
             <div class="flex flex-col space-y-12">
-              <ValidationProvider
-                v-slot="{ errors }"
-                rules="required|alpha_num"
-              >
+              <ValidationProvider v-slot="{ errors }" rules="required">
                 <div class="text-field">
                   <input
                     v-model="form.name"

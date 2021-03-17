@@ -66,13 +66,11 @@ export const actions = {
       .catch((err) => err.message)
   },
   async getUser({ commit }) {
-    this.$axios.defaults.headers.common.Authorization = `Bearer ${window.$nuxt.$cookies.get(
-      'token'
-    )}`
     return await this.$axios
       .get('user')
       .then(({ data }) => {
         commit('setUser', data.data)
+        return data
       })
       .catch((err) => ({
         status: err.response.status,

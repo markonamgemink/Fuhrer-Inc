@@ -3,7 +3,7 @@
     <section>
       <div class="flex justify-center items-center bg-gray-900">
         <div
-          class="py-32 flex justify-center items-center flex-col w-2/5 space-y-4"
+          class="py-32 flex justify-center items-center text-center flex-col w-4/5 md:w-3/5 lg:w-2/5 space-y-4"
         >
           <p class="text-5xl text-white font-bold">FUHRER INDUSTRI</p>
           <div class="flex w-full items-center">
@@ -37,7 +37,7 @@
             <li>
               <span
                 ><nuxt-link to="/" class="text-gray-500 font-semibold text-xl"
-                  >T-Shirt</nuxt-link
+                  >Kaos</nuxt-link
                 ></span
               >
             </li>
@@ -49,7 +49,7 @@
               >
             </li>
           </ul>
-          <div class="flex items-center">
+          <div class="flex flex-col lg:flex-row items-center">
             <p class="text-gray-900 pr-2 text-base font-medium">
               Urut Berdasarkan
             </p>
@@ -67,7 +67,10 @@
           </div>
         </div>
         <Loading v-if="$fetchState.pending" />
-        <div else class="mt-4 grid grid-cols-4 gap-8">
+        <div
+          else
+          class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+        >
           <ProductCard
             v-for="product in products"
             :key="product.id"
