@@ -24,7 +24,7 @@
         </li>
         <li>
           <span class="link">
-            <nuxt-link to="/about-us">Tentang Kami</nuxt-link></span
+            <nuxt-link to="/aboutus">Tentang Kami</nuxt-link></span
           >
         </li>
         <li v-if="$cookies.get('token')">
