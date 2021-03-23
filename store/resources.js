@@ -4,8 +4,8 @@ export const state = () => ({
 })
 
 export const getters = {
-  getCities: (state) => state.cities,
   getProvinces: (state) => state.provinces,
+  getCities: (state) => state.cities,
 }
 
 export const mutations = {

@@ -27,7 +27,7 @@ export default {
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/vee-validate.js'],
+  plugins: ['~/plugins/vee-validate.js', '~/plugins/axios.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -53,6 +53,8 @@ export default {
         'faMinus',
         'faUserCircle',
         'faCircleNotch',
+        'faTrash',
+        'faShoppingCart',
       ],
       brands: ['faYoutube', 'faFacebook', 'faWhatsapp', 'faInstagram'],
     },
@@ -73,7 +75,6 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    // transpile: [/^vue-awesome/],
     transpile: ['vee-validate/dist/rules'],
   },
 }

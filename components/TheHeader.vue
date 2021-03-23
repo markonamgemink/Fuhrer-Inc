@@ -35,7 +35,12 @@
             <nuxt-link to="/login">Masuk/Daftar</nuxt-link></span
           >
         </li>
-        <li><Icon icon="bars" class="text-primary text-xl" /></li>
+        <li v-if="$cookies.get('token')">
+          <Icon icon="shopping-cart" class="text-xl" />
+        </li>
+        <li v-else>
+          <Icon icon="bars" class="text-xl text-primary" />
+        </li>
       </ul>
     </div>
     <div class="flex md:hidden">
@@ -70,6 +75,11 @@
         <li @click="isShowDropdown = !isShowDropdown">
           <span class="link">
             <nuxt-link to="/about-us">Tentang Kami</nuxt-link></span
+          >
+        </li>
+        <li @click="isShowDropdown = !isShowDropdown">
+          <span class="link">
+            <nuxt-link to="/about-us">Keranjang</nuxt-link></span
           >
         </li>
         <li

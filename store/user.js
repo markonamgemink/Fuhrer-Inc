@@ -6,7 +6,7 @@ export const state = () => ({
 
 export const getters = {
   getUser: (state) => state.user,
-  getToken: (state) => window.$nuxt.$cookies.get('token') || state.token,
+  getToken: (state) => state.token,
   getAuthenticated: (state) => state.authenticated,
 }
 
@@ -15,14 +15,22 @@ export const mutations = {
     state.authenticated = false
     state.token = null
     state.user = null
+    this.$cookies.remove('user')
+    this.$cookies.remove('token')
   },
   setAuthenticated(state, authenticated) {
     state.authenticated = authenticated
   },
   setUser(state, user) {
+    this.$cookies.set('user', user, {
+      maxAge: 60 * 60,
+    })
     state.user = user
   },
   setToken(state, token) {
+    this.$cookies.set('token', token, {
+      maxAge: 60 * 60,
+    })
     state.token = token
   },
 }
@@ -35,11 +43,7 @@ export const actions = {
         commit('setToken', data.meta.token)
         commit('setUser', data.data)
         commit('setAuthenticated', true)
-        this.$axios.defaults.headers.common.Authorization = `Bearer ${data.meta.token}`
-        localStorage.setItem('token', data.meta.token)
-        window.$nuxt.$cookies.set('token', data.meta.token, {
-          maxAge: 60 * 60,
-        })
+
         return data
       })
       .catch((err) => ({
@@ -57,10 +61,7 @@ export const actions = {
         commit('setToken', data.meta.token)
         commit('setUser', data.data)
         commit('setAuthenticated', true)
-        this.$axios.defaults.headers.common.Authorization = `Bearer ${data.meta.token}`
-        window.$nuxt.$cookies.set('token', data.meta.token, {
-          maxAge: 60 * 60,
-        })
+
         return data
       })
       .catch((err) => err.message)
@@ -70,17 +71,33 @@ export const actions = {
       .get('user')
       .then(({ data }) => {
         commit('setUser', data.data)
-        return data
+
+        return data.data
       })
       .catch((err) => ({
         status: err.response.status,
         msg: err.response.data.error,
       }))
   },
+  async updateUser({ dispatch, state }, params) {
+    return await this.$axios
+      .post('user', params, {
+        headers: {
+          Authorization: `Bearer ${state.token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(({ data }) => {
+        dispatch('getUser')
+        return data.data
+      })
+      .catch((err) => {
+        throw err
+      })
+  },
   logout({ commit }) {
     commit('resetState')
     commit('setAuthenticated', false)
     delete this.$axios.defaults.headers.common.Authorization
-    window.$nuxt.$cookies.remove('token')
   },
 }

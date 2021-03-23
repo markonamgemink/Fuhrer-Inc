@@ -1,7 +1,7 @@
 <template>
   <div class="flex shadow-lg rounded-lg justify-between">
     <div class="flex">
-      <img src="" alt="Gambar Produk" class="h-32 w-32" />
+      <img src="" alt="Gambar Produk" class="h-48 w-48" />
       <div class="flex flex-col justify-between p-4">
         <div class="flex items-center space-x-2">
           <h3 class="text-lg font-semibold text-gray-900">Kaos Bolong</h3>

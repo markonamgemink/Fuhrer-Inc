@@ -14,22 +14,34 @@
             class="flex flex-col space-y-8"
             @submit.prevent="handleSubmit(onSubmit)"
           >
-            <!-- <span
-              v-if="errors"
-              class="error-text rounded bg-red-200 p-2 w-full"
-              >{{ errors }}</span
-            > -->
             <div class="flex flex-col space-y-12">
               <ValidationProvider v-slot="{ errors }" rules="required">
                 <div class="text-field">
                   <input
-                    v-model="form.name"
-                    name="nama"
+                    v-model="form.first_name"
+                    name="Nama Depan"
                     type="text"
                     class="text-field-input"
                     placeholder=" "
                   />
-                  <label for="nama" class="text-field-label">Nama</label>
+                  <label for="Nama Depan" class="text-field-label"
+                    >Nama Depan</label
+                  >
+                </div>
+                <span class="error-text">{{ errors[0] }}</span>
+              </ValidationProvider>
+              <ValidationProvider v-slot="{ errors }" rules="required">
+                <div class="text-field">
+                  <input
+                    v-model="form.last_name"
+                    name="Nama Belakang"
+                    type="text"
+                    class="text-field-input"
+                    placeholder=" "
+                  />
+                  <label for="Nama Belakang" class="text-field-label"
+                    >Nama Belakang</label
+                  >
                 </div>
                 <span class="error-text">{{ errors[0] }}</span>
               </ValidationProvider>
@@ -113,11 +125,12 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
-  middleware: 'unauth',
+  middleware: 'guest',
   data() {
     return {
       form: {
-        name: '',
+        first_name: '',
+        last_name: '',
         email: '',
         password: '',
         password_confirmation: '',

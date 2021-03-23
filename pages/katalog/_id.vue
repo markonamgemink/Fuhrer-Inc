@@ -29,46 +29,6 @@
               >{{ stock.size }}</span
             >
           </li>
-          <!-- <li>
-            <span
-              :class="{'disabled-size': 'active-size': currentProduct.size === 'S' }"
-              class="font-semibold text-base size-btn"
-              @click="changeProductStock('S')"
-              >S</span
-            >
-          </li>
-          <li>
-            <span
-              :class="{ 'active-size': currentProduct.size === 'M' }"
-              class="font-semibold text-base size-btn"
-              @click="changeProductStock('M')"
-              >M</span
-            >
-          </li>
-          <li>
-            <span
-              :class="{ 'active-size': currentProduct.size === 'L' }"
-              class="font-semibold text-base size-btn"
-              @click="changeProductStock('L')"
-              >L</span
-            >
-          </li>
-          <li>
-            <span
-              :class="{ 'active-size': currentProduct.size === 'XL' }"
-              class="font-semibold text-base size-btn"
-              @click="changeProductStock('XL')"
-              >XL</span
-            >
-          </li>
-          <li>
-            <span
-              :class="{ 'active-size': currentProduct.size === 'XXL' }"
-              class="font-semibold text-base size-btn"
-              @click="changeProductStock('XXL')"
-              >XXL</span
-            >
-          </li> -->
         </ul>
         <div class="flex space-x-8 my-2">
           <div
@@ -78,7 +38,7 @@
               <Icon
                 icon="minus"
                 class="box-content p-1 text-xl rounded-full cursor-pointer"
-                :class="[qty > 0 ? 'bg-primary' : 'bg-gray-500']"
+                :class="[qty > 0 ? 'bg-red-500' : 'bg-gray-500']"
                 @click="qty > 0 ? qty-- : null"
               />
               <p class="font-semibold xl">{{ qty }}</p>
@@ -99,7 +59,9 @@
             </div>
           </div>
 
-          <button class="btn bg-white text-black rounded">+ Keranjang</button>
+          <button class="btn bg-white text-black rounded" @click="addToCart">
+            + Keranjang
+          </button>
           <button class="btn bg-primary rounded">Beli Langsung</button>
         </div>
         <div class="flex flex-col space-y-4 my-8">
@@ -152,6 +114,7 @@ export default {
   computed: {
     ...mapGetters({
       product: 'product/getProduct',
+      user: 'user/getUser',
     }),
   },
   methods: {
@@ -159,6 +122,30 @@ export default {
       this.currentProduct = this.product.stock.find(
         (stock) => stock.size === size
       )
+    },
+    async addToCart() {
+      await this.$store
+        .dispatch('cart/insertCart', {
+          id_user: this.user.id,
+          id_stock: this.currentProduct.id,
+          total: this.qty,
+        })
+        .then(() => {
+          this.$toast.show('Berhasil Menambahkan Barang!', {
+            position: 'top-center',
+            theme: 'bubble',
+            type: 'success',
+            duration: 3000,
+          })
+        })
+        .catch(() => {
+          this.$toast.show('Gagal Menambahkan Barang', {
+            position: 'top-center',
+            theme: 'bubble',
+            type: 'error',
+            duration: 3000,
+          })
+        })
     },
   },
 }

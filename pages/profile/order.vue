@@ -11,16 +11,16 @@
       <li class="menu">Selesai</li>
     </ul>
     <div class="flex flex-col space-y-8 mt-8">
-      <CheckoutCard v-for="index in 10" :key="index" />
+      <OrderCard v-for="index in 10" :key="index" />
     </div>
   </div>
 </template>
 
 <script>
-import CheckoutCard from '~/components/CheckoutCard.vue'
+import OrderCard from '~/components/OrderCard.vue'
 export default {
   components: {
-    CheckoutCard,
+    OrderCard,
   },
 }
 </script>
