@@ -27,7 +27,13 @@ export default {
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/vee-validate.js', '~/plugins/axios.js'],
+  plugins: [
+    '~/plugins/vee-validate.js',
+    '~/plugins/axios.js',
+    '~/plugins/vue-debounce.js',
+    '~plugins/vue-js-modal.js',
+    { src: '~/plugins/vue-good-table.js', ssr: false },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -55,6 +61,12 @@ export default {
         'faCircleNotch',
         'faTrash',
         'faShoppingCart',
+        'faHome',
+        'faTshirt',
+        'faUser',
+        'faMoneyCheck',
+        'faSignOutAlt',
+        'faAngleUp',
       ],
       brands: ['faYoutube', 'faFacebook', 'faWhatsapp', 'faInstagram'],
     },

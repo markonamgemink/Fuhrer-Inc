@@ -23,8 +23,9 @@ export const mutations = {
 
 export const actions = {
   async getAllProduct({ commit }, params) {
+    console.log(params)
     return await this.$axios
-      .get('products', params)
+      .get('products', { params })
       .then(({ data }) => {
         commit('setProducts', data.data)
         return data
