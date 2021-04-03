@@ -1,38 +1,68 @@
 <template>
-  <modal name="product-modal" :adaptive="true">
-    <Loading v-if="$fetchState.pending" />
-    <ValidationObserver v-else v-slot="{ handleSubmit }">
-      <form
-        class="flex flex-col space-y-8"
-        @submit.prevent="handleSubmit(onSubmit)"
-      >
-        <ValidationProvider v-slot="{ errors }" rules="required|alpha_num">
-          <div class="flex flex-col space-y-1 text-lg">
-            <label for="Nama Depan" class="font-semibold">Nama</label>
-            <input
-              v-model="form.name"
-              name="Nama Depan"
-              type="text"
-              :class="{ 'border-red-500': errors[0] }"
-              class="border-2 border-gray-500 rounded"
-              placeholder="Nama Produk"
-            />
-            <span class="error-text">{{ errors[0] }}</span>
-          </div>
-        </ValidationProvider>
-      </form>
-    </ValidationObserver>
+  <modal
+    name="product-modal"
+    :scrollable="true"
+    height="auto"
+    :width="900"
+    :max-height="400"
+  >
+    <div class="flex">
+      <div class="w-1/2">
+        <h3 class="text-center font-semibold text-xl text-gray-900 p-2">
+          {{ product != null ? product.name : 'Produk Baru' }}
+        </h3>
+      </div>
+      <div>
+        <ul class="flex">
+          <li
+            :class="{ 'border-b-4 border-primary': activeTab === 1 }"
+            class="py-1 px-3 text-lg font-semibold text-gray-700 cursor-pointer"
+            @click="activeTab = 1"
+          >
+            <span>Produk</span>
+          </li>
+          <li
+            :class="{ 'border-b-4 border-primary': activeTab === 2 }"
+            class="py-1 px-3 text-lg font-semibold text-gray-700 cursor-pointer"
+            @click="activeTab = 2"
+          >
+            <span>Stock</span>
+          </li>
+        </ul>
+        <Loading
+          v-if="$fetchState.pending"
+          class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-transparent z-10"
+        />
+        <div>
+          <ProductForm v-show="activeTab === 1" :product="product" />
+          <StockForm v-show="activeTab === 2" :stocks="stocks" />
+        </div>
+        <div class="flex justify-end space-x-4 mb-4">
+          <button
+            type="button"
+            class="btn bg-red-500 text-white rounded-xl"
+            @click="$modal.hide('product-modal')"
+          >
+            Batal
+          </button>
+          <button type="submit" class="btn bg-blue-500 text-white rounded-xl">
+            Simpan
+          </button>
+        </div>
+      </div>
+    </div>
   </modal>
 </template>
 
 <script>
-import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import Loading from '../Loading.vue'
+import ProductForm from '../Form/ProductForm'
+import StockForm from '../Form/StockForm.vue'
 export default {
   components: {
     Loading,
-    ValidationProvider,
-    ValidationObserver,
+    ProductForm,
+    StockForm,
   },
   props: {
     productId: {
@@ -43,16 +73,18 @@ export default {
   },
   data() {
     return {
-      form: {
-        name: '',
-      },
+      product: null,
+      stocks: null,
+      activeTab: 1,
     }
   },
   async fetch() {
     await this.$store
       .dispatch('product/getProduct', this.productId)
       .then((data) => {
-        this.form = { ...data.data }
+        console.log(data)
+        this.product = { ...data.data }
+        this.stocks = [...data.stock]
       })
   },
   watch: {
@@ -60,9 +92,8 @@ export default {
       if (newVal != null) {
         this.$fetch()
       } else {
-        this.form = null
+        Object.assign(this.$data, this.$options.data())
       }
-      console.log(this.form.name)
     },
   },
 }

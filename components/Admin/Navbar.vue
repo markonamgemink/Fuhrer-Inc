@@ -1,7 +1,12 @@
 <template>
-  <div class="sticky top-0 z-40">
+  <div
+    class="sticky top-0 z-40"
+    :class="{
+      scrolled: !atTopOfPage,
+    }"
+  >
     <div
-      class="w-full h-20 px-6 bg-white border-b lg:border-none lg:bg-transparent flex items-center justify-between"
+      class="w-full h-16 px-6 bg-white border-b lg:border-none lg:bg-transparent flex items-center justify-between"
     >
       <!-- left navbar -->
       <div class="flex">
@@ -23,7 +28,7 @@
           </button>
         </div>
         <div class="text-2xl font-bold text-primary">
-          <span>DASHBOARD</span>
+          <span>{{ activeMenu }}</span>
         </div>
       </div>
     </div>
@@ -33,14 +38,34 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  computed: {
-    ...mapGetters({ sideBarOpen: 'admin/sideBarOpen' }),
+  data() {
+    return {
+      atTopOfPage: true,
+    }
   },
-
+  computed: {
+    ...mapGetters({
+      sideBarOpen: 'admin/sideBarOpen',
+      activeMenu: 'admin/activeMenu',
+    }),
+  },
+  mounted() {
+    window.addEventListener('scroll', this.updateScrollPosititon)
+  },
   methods: {
+    updateScrollPosititon() {
+      if (window.pageYOffset > 0) {
+        if (this.atTopOfPage) this.atTopOfPage = false
+      } else if (!this.atTopOfPage) this.atTopOfPage = true
+    },
     toggleSidebar() {
       this.$store.commit('admin/toggleSideBar')
     },
   },
 }
 </script>
+<style scoped>
+.scrolled {
+  @apply w-full bg-white shadow-lg z-40;
+}
+</style>

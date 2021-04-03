@@ -13,6 +13,9 @@
         <p class="text-gray-500 line-clamp-3">
           {{ description }}
         </p>
+        <p class="text-primary font-semibold text-lg">
+          {{ `Rp. ${price.min} - Rp. ${price.max}` }}
+        </p>
       </div>
     </div>
   </nuxt-link>
@@ -35,6 +38,10 @@ export default {
     },
     image: {
       type: String,
+      required: true,
+    },
+    price: {
+      type: Object,
       required: true,
     },
   },

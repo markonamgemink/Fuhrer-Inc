@@ -1,30 +1,16 @@
 <template>
   <main>
     <Loading v-if="$fetchState.pending" />
-    <div v-else>
-      <div class="flex">
+    <div v-else class="relative">
+      <div class="absolute right-0 top-0">
         <button
           class="btn bg-primary text-white uppercase rounded-xl"
           @click="onButtonCreateClick"
         >
-          create
+          tambah
         </button>
       </div>
-      <!-- <vue-good-table
-        mode="remote"
-        :total-rows="total"
-        :columns="columns"
-        :rows="rows"
-        :search-options="{ enabled: true }"
-        :pagination-options="{
-          enabled: true,
-          mode: 'pages',
-        }"
-        @on-page-change="onPageChange"
-        @on-sort-change="onSortChange"
-        @on-per-page-change="onPerPageChange"
-        @on-search="onSearch"
-      /> -->
+
       <TheTable
         :total-rows="total"
         :columns="columns"
@@ -51,6 +37,7 @@ export default {
     ProductModal,
   },
   layout: 'admin',
+  middleware: 'admin',
   data() {
     return {
       columns: [
@@ -100,7 +87,8 @@ export default {
           this.page = data.meta.current_page
           this.rows = data.data.map((product) => {
             const { id, name, category } = { ...product }
-            return { id, name, category }
+            const categoryName = category.name
+            return { id, name, categoryName }
           })
         })
     },
@@ -124,7 +112,9 @@ export default {
     async onSearch(params) {
       this.params.search = params.searchKey
       this.params.search_by = params.searchBy
-      if (params.searchBy === 'category') this.params.search_by = 'id_category'
+      if (params.searchBy === 'category') {
+        this.params.search_by = 'id_category'
+      }
       await this.fetchProducts()
     },
     onDoubleClick(params) {

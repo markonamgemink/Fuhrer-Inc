@@ -8,6 +8,7 @@
           <p class="text-5xl text-white font-bold">FUHRER INDUSTRI</p>
           <div class="flex w-full items-center">
             <input
+              v-debounce:500.unlock="onSearch"
               type="text"
               class="rounded-full py-2 px-4 w-full focus:outline-none"
               placeholder="Cari"
@@ -57,10 +58,10 @@
               id="orders"
               name="order"
               class="rounded-full bg-white border border-gray-900 p-2 focus:outline-none"
+              @change="onOrderChange"
             >
               <option value="newest">Terbaru</option>
-              <option value="newest">Terlama</option>
-              <option value="populer">Terpopuler</option>
+              <option value="oldest">Terlama</option>
               <option value="expensive">Harga Termurah</option>
               <option value="cheapest">Harga Termahal</option>
             </select>
@@ -81,6 +82,15 @@
             :image="product.image"
           />
         </div>
+        <div class="flex justify-end my-4">
+          <Pagination
+            :total="totalData"
+            :per-page="16"
+            :max-visible-pages="3"
+            :current-page.sync="filter.page"
+            @on-page-change="onPageChange"
+          />
+        </div>
       </div>
     </section>
   </main>
@@ -90,18 +100,70 @@
 import { mapGetters } from 'vuex'
 import ProductCard from '~/components/ProductCard.vue'
 import Loading from '~/components/Loading.vue'
+import Pagination from '~/components/Pagination.vue'
 export default {
   components: {
     ProductCard,
     Loading,
+    Pagination,
+  },
+  data() {
+    return {
+      filter: {
+        page: 1,
+        sort_by: null,
+        sort_direction: 'asc',
+        search: 'polos',
+        search_by: 'name',
+      },
+      totalData: null,
+    }
   },
   async fetch() {
-    await this.$store.dispatch('product/getAllProduct')
+    await this.fetchProducts()
   },
   computed: {
     ...mapGetters({
       products: 'product/getProducts',
     }),
+  },
+  methods: {
+    async fetchProducts() {
+      await this.$store
+        .dispatch('product/getAllProduct', this.filter)
+        .then((data) => {
+          this.totalData = data.meta.total
+        })
+    },
+    async onOrderChange(event) {
+      switch (event.target.value) {
+        case 'newest':
+          this.filter.sort_direction = 'asc'
+          this.filter.sort_by = 'created_at'
+          break
+        case 'oldest':
+          this.filter.sort_direction = 'desc'
+          this.filter.sort_by = 'created_at'
+          break
+        case 'cheapest':
+          this.filter.sort_direction = 'desc'
+          this.filter.sort_by = 'price'
+          break
+        case 'expensive':
+          this.filter.sort_direction = 'asc'
+          this.filter.sort_by = 'price'
+          break
+      }
+      await this.fetchProducts()
+    },
+    async onSearch($event) {
+      this.filter.search = $event
+      await this.fetchProducts()
+    },
+    async onPageChange(params) {
+      this.filter.page = params.currentPage
+      await this.fetchProducts()
+    },
   },
 }
 </script>
