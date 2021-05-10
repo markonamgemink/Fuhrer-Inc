@@ -32,7 +32,8 @@ export default {
     '~/plugins/axios.js',
     '~/plugins/vue-debounce.js',
     '~plugins/vue-js-modal.js',
-    { src: '~/plugins/vue-good-table.js', ssr: false },
+    '~plugins/fabric.js',
+    // { src: '~/plugins/vue-fabric-wrapper.js', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -78,11 +79,12 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/toast',
     'cookie-universal-nuxt',
+    'vue-swatches/nuxt',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://project.fuhrer-inc-api.test/api/',
+    baseURL: 'https://api-fuhrer.herokuapp.com/',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

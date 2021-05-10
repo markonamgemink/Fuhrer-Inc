@@ -1,35 +1,31 @@
 <template>
-  <div>
-    <ul class="flex text-gray-700 font-semibold">
-      <li
-        class="cursor-pointer px-4 py-2 border bg-white border-gray-200 rounded-l-xl overflow-hidden"
-        :disabled="currentPage < 2"
-        :class="{ 'disabled text-gray-500': currentPage < 2 }"
-        @click="currentPage < 2 ? null : onPageChange(currentPage - 1)"
-      >
-        <Icon icon="angle-up" class="transform -rotate-90" />
-      </li>
-      <li
-        v-for="page in visiblePages"
-        :key="page"
-        :class="{ 'text-primary bg-gray-200': currentPage === page }"
-        class="cursor-pointer px-4 py-2 border bg-white border-gray-200 hover:bg-gray-200 transition-colors duration-200"
-        @click="onPageChange(page)"
-      >
-        {{ page }}
-      </li>
-      <li
-        class="cursor-pointer px-4 py-2 border bg-white border-gray-200 rounded-r-xl overflow-hidden"
-        :disabled="currentPage >= totalPages"
-        :class="{ 'disabled text-gray-500': currentPage == totalPages }"
-        @click="
-          currentPage === totalPages ? null : onPageChange(currentPage + 1)
-        "
-      >
-        <Icon icon="angle-up" class="transform rotate-90" />
-      </li>
-    </ul>
-  </div>
+  <ul class="flex text-gray-700 font-semibold">
+    <li
+      class="cursor-pointer px-4 py-2 border bg-white border-gray-200 rounded-l-xl overflow-hidden"
+      :disabled="currentPage < 2"
+      :class="{ 'disabled text-gray-500': currentPage < 2 }"
+      @click="currentPage < 2 ? null : onPageChange(currentPage - 1)"
+    >
+      <Icon icon="angle-up" class="transform -rotate-90" />
+    </li>
+    <li
+      v-for="page in visiblePages"
+      :key="page"
+      :class="{ 'text-primary bg-gray-200': currentPage === page }"
+      class="cursor-pointer px-4 py-2 border bg-white border-gray-200 hover:bg-gray-200 transition-colors duration-200"
+      @click="onPageChange(page)"
+    >
+      {{ page }}
+    </li>
+    <li
+      class="cursor-pointer px-4 py-2 border bg-white border-gray-200 rounded-r-xl overflow-hidden"
+      :disabled="currentPage >= totalPages"
+      :class="{ 'disabled text-gray-500': currentPage == totalPages }"
+      @click="currentPage === totalPages ? null : onPageChange(currentPage + 1)"
+    >
+      <Icon icon="angle-up" class="transform rotate-90" />
+    </li>
+  </ul>
 </template>
 
 <script>

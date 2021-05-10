@@ -62,8 +62,8 @@
             >
               <option value="newest">Terbaru</option>
               <option value="oldest">Terlama</option>
-              <option value="expensive">Harga Termurah</option>
-              <option value="cheapest">Harga Termahal</option>
+              <!-- <option value="expensive">Harga Termurah</option>
+              <option value="cheapest">Harga Termahal</option> -->
             </select>
           </div>
         </div>
@@ -112,8 +112,8 @@ export default {
       filter: {
         page: 1,
         sort_by: null,
-        sort_direction: 'asc',
-        search: 'polos',
+        sort_direction: 'desc',
+        search: null,
         search_by: 'name',
       },
       totalData: null,
@@ -138,11 +138,11 @@ export default {
     async onOrderChange(event) {
       switch (event.target.value) {
         case 'newest':
-          this.filter.sort_direction = 'asc'
+          this.filter.sort_direction = 'desc'
           this.filter.sort_by = 'created_at'
           break
         case 'oldest':
-          this.filter.sort_direction = 'desc'
+          this.filter.sort_direction = 'asc'
           this.filter.sort_by = 'created_at'
           break
         case 'cheapest':
